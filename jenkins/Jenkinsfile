@@ -32,11 +32,20 @@ pipeline {
                 archiveArtifacts artifacts: 'build/**', fingerprint: true
             }
         }
-       stage('Deploy') {
-          steps {
-             sh "docker exec react-app rm -rf /usr/share/nginx/html/*"
-             sh 'docker cp build/. react-app:/usr/share/nginx/html'
-          }
+      stage('Deploy') { 
+       steps {
+           script {
+               // Copy artifacts from the current job
+               copyArtifacts filter: 'build/**', target: 'build/', flatten: true
+           }
+           
+           // Clean the Nginx HTML directory
+           sh "docker exec react-app rm -rf /usr/share/nginx/html/*"
+           
+           // Copy the build contents from the artifacts to the Nginx container
+           sh 'docker cp build/. react-app:/usr/share/nginx/html'
        }
+     }
+
     }
 }
