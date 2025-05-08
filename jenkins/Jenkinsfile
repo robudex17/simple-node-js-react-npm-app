@@ -34,10 +34,10 @@ pipeline {
         }
       stage('Deploy') { 
        steps {
-           script {
+         //  script {
                // Copy artifacts from the current job
-               copyArtifacts filter: 'build/**', target: 'build/', flatten: true
-           }
+         //      copyArtifacts filter: 'build/**', target: 'build/', flatten: true
+         //  }
            
            // Clean the Nginx HTML directory
            sh "docker exec react-app rm -rf /usr/share/nginx/html/*"
