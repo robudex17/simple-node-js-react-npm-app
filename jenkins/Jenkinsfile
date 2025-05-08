@@ -35,7 +35,7 @@ pipeline {
        stage('Deploy') {
           steps {
              sh "docker exec react-app rm -rf /usr/share/nginx/html/*"
-             sh 'docker cp bulid/. react-app:/usr/share/nginx/html'
+             sh 'docker cp build/. react-app:/usr/share/nginx/html'
           }
        }
     }
